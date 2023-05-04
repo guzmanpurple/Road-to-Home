@@ -1,19 +1,25 @@
 
-//let videofile = "videos/Chaos.mp4"
-//let videofile = "videos/Excite.mp4"
-let videofile = "videos/Frustration.mp4"
+let videofileChaos = "videos/Chaos.mp4"
+let videofileExcite = "videos/Excite.mp4"
+let videofileFrustration = "videos/Frustration.mp4"
 
 let vid;
 let playing = true;
 
 let s ;
 let myRec;
+let chaos_song;
+
+function preload(){
+  soundFormats('wav');
+  chaos_song = loadSound('videos/loud.wav')
+}
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
   // noCanvas();
 
-  vid = createVideo(videofile);
+  vid = createVideo(videofileExcite);
   //vid.size(1024, 1024);
   vid.volume(0);
   vid.loop();
@@ -21,16 +27,18 @@ function setup() {
   vid.position(0.0);
 console.log("hello")
 
+
 //myRec = new p5.SpeechRec(); // new P5.SpeechRec object
 
   //myRec.onResult = showResult;
 		
-  
+ 
     myRec = new p5.SpeechRec('en-US', parseResult); // new P5.SpeechRec object
     myRec.continuous = true; // do continuous recognition
     myRec.interimResults = true; // allow partial recognition (faster, less accurate)
   
     myRec.start();
+
   
 
 }
@@ -51,19 +59,20 @@ function draw() {
   //text( s, 100, 100)
 }
 
-// function keyPressed() {
+// function keyPressed() { 
 //  vid.time(random(vid.duration())) 
 // }
 
-function mousePressed() {
- if (playing) {
-   vid.pause();
- }
-  else {
-    vid.play();
-  }
-  playing = !playing;
-}
+// function mousePressed() {
+//  if (playing) {
+//    vid.pause();
+//  }
+//   else {
+//     vid.play();
+//   }
+//   playing = !playing;
+  
+// }
 
 function windowResized(){
   resizeCanvas(windowWidth,windowHeight);
@@ -96,18 +105,27 @@ function showResult()
 		if(mostrecentword.indexOf("chaos")!==-1) { 
       actionChaos()
      }
-		else if(mostrecentword.indexOf("frustration")!==-1) { 
-      actionFrustartion() 
+		if(mostrecentword.indexOf("frustration")!==-1) { 
+     actionFrustartion() 
     }
-		else if(mostrecentword.indexOf("excitement")!==-1) { 
+		if(mostrecentword.indexOf("excitement")!==-1) { 
       actionExcite(); 
     }
-		else if(mostrecentword.indexOf("start")!==-1) { 
+		if(mostrecentword.indexOf("chaos")!==-1) { 
       actionStart() 
     }
-		else if(mostrecentword.indexOf("pause")!==-1) {
+    if(mostrecentword.indexOf("start")!==-1) { 
+      actionStart() 
+    }
+		if(mostrecentword.indexOf("excitement")!==-1) {
        actionPause() 
     }
+    if(mostrecentword.indexOf("frustration")!==-1) {
+      actionPause() 
+   }
+   if(mostrecentword.indexOf("stop")!==-1) {
+    actionPause() 
+ }
 		console.log("chicken"+mostrecentword);
 	}
 
@@ -115,6 +133,8 @@ function showResult()
 		console.log("actionStart");
      {
       vid.play();
+      chaos_song.play();
+      console.log("play chaos sound")
     }
     //  else {
     //    vid.play();
@@ -126,6 +146,7 @@ function showResult()
   function actionPause() {
 
     vid.pause();
+    chaos_song.stop();
 		// console.log("actionStop");
     // if (playing) {
     //   vid.pause();
