@@ -70,7 +70,7 @@ vidExcite.position(0.0);
     myRec.start();
 
     img = vidDefault;
-
+    
 }
 
 function draw() {
@@ -81,7 +81,7 @@ function draw() {
   
   //imgchaos = vidChaos.get();
   image(img.get(),0, 0,windowWidth,windowHeight); // redraws the video frame by frame in                         p5
-
+  Excite_song.play();
   //textSize(40);
   //counter = nf(vid.time(), 0, 2); // first argument is decimal places to the left (use zero to default to places necessary)
   //text(counter, 10, 300);
